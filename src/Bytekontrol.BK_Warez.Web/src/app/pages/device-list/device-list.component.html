@@ -1,0 +1,97 @@
+<main class="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-10">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-6 flex items-baseline gap-3">
+      <h1 class="text-2xl font-semibold tracking-tight text-slate-900">Geräte</h1>
+      <span class="rounded-full bg-slate-200 px-2.5 py-0.5 text-xs font-medium text-slate-600">
+        {{ filteredDevices.length }} von {{ devices.length }}
+      </span>
+    </div>
+
+    <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="relative w-full sm:max-w-xs">
+        <svg
+          class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+          fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M18.5 11a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+        </svg>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Geräte durchsuchen…"
+          class="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+      </div>
+
+      <a
+        routerLink="/geraete/neu"
+        class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-50"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Artikel hinzufügen
+      </a>
+    </div>
+
+    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead class="bg-slate-50">
+            <tr>
+              @for (column of columns; track column.key) {
+                <th
+                  scope="col"
+                  (click)="sortBy(column.key)"
+                  class="group cursor-pointer select-none whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-700"
+                >
+                  <span class="inline-flex items-center gap-1">
+                    {{ column.label }}
+                    @if (sortColumn === column.key) {
+                      <svg
+                        class="h-3.5 w-3.5 text-indigo-600 transition-transform"
+                        [class.rotate-180]="sortDirection === 'desc'"
+                        fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                      </svg>
+                    } @else {
+                      <svg
+                        class="h-3.5 w-3.5 text-slate-300 opacity-0 transition-opacity group-hover:opacity-100"
+                        fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                      </svg>
+                    }
+                  </span>
+                </th>
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            @for (device of filteredDevices; track device.id) {
+              <tr
+                (click)="openDevice(device)"
+                class="cursor-pointer transition-colors hover:bg-indigo-50"
+              >
+                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">{{ device.id }}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ device.createdAt | date:'dd.MM.yyyy' }}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ device.category }}</td>
+                <td class="px-4 py-3 text-sm text-slate-900">{{ device.name }}</td>
+                <td class="px-4 py-3 text-sm text-slate-600">{{ device.details }}</td>
+                <td class="whitespace-nowrap px-4 py-3 font-mono text-sm text-slate-600">{{ device.serialNumber }}</td>
+                <td class="px-4 py-3 text-sm text-slate-500">{{ device.remarks || '–' }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td [attr.colspan]="columns.length" class="px-4 py-10 text-center text-sm text-slate-400">
+                  Keine Geräte gefunden.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

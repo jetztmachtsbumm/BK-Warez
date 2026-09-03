@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bk-warez-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "src/Bytekontrol.BK_Warez.Web"],
+      "port": 4200
+    }
+  ]
+}
