@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Device, DeviceColumn } from '../../models/device.model';
 
 type SortDirection = 'asc' | 'desc';
@@ -14,6 +14,8 @@ type SortDirection = 'asc' | 'desc';
   styleUrl: './device-list.component.scss'
 })
 export class DeviceListComponent {
+  private readonly router = inject(Router);
+
   readonly columns: { key: DeviceColumn; label: string }[] = [
     { key: 'id', label: 'Id' },
     { key: 'createdAt', label: 'Anlagedatum' },
@@ -56,6 +58,6 @@ export class DeviceListComponent {
   }
 
   openDevice(device: Device): void {
-    // TODO: navigate to the detail view once it exists.
+    this.router.navigate(['/geraete', device.id, 'bearbeiten']);
   }
 }
