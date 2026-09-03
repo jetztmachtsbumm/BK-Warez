@@ -1,0 +1,160 @@
+# ============================================
+# Visual Studio / .NET
+# ============================================
+
+.vs/
+.vscode/
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+*.VC.db
+*.VC.VC.opendb
+
+# Test results
+TestResults/
+*.trx
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# ASP.NET Core
+wwwroot/
+
+# Publish output
+publish/
+*.publishsettings
+*.pubxml.user
+
+# Logs
+*.log
+
+
+# ============================================
+# .NET / ASP.NET secrets & local configuration
+# ============================================
+
+# Local development configuration
+appsettings.Development.json
+appsettings.Local.json
+
+# User secrets (normally stored outside project,
+# but ignore if generated locally)
+secrets.json
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+
+# ============================================
+# Angular / Node
+# ============================================
+
+# Dependencies
+node_modules/
+
+# Angular build output
+dist/
+.angular/
+
+# Angular cache
+.cache/
+
+# Coverage
+coverage/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Package manager caches
+.npm/
+.pnpm-store/
+
+
+# ============================================
+# Angular environment files
+# ============================================
+
+# Ignore environment files containing secrets
+src/environments/environment.local.ts
+src/environments/environment.*.local.ts
+
+
+# ============================================
+# OS generated files
+# ============================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+
+# ============================================
+# IDEs
+# ============================================
+
+# JetBrains
+.idea/
+*.iml
+
+# Rider
+*.sln.iml
+
+
+# ============================================
+# Database / local development
+# ============================================
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Local SQL Server files
+*.mdf
+*.ldf
+
+
+# ============================================
+# Docker
+# ============================================
+
+# Docker overrides containing local settings
+docker-compose.override.yml
+
+
+# ============================================
+# Misc
+# ============================================
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.bak

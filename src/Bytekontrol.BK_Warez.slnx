@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Bytekontrol.BK_Warez.Api/Bytekontrol.BK_Warez.Api.csproj" />
+  <Project Path="Bytekontrol.BK_Warez.App/Bytekontrol.BK_Warez.App.csproj" />
+  <Project Path="Bytekontrol.BK_Warez.Core/Bytekontrol.BK_Warez.Core.csproj" />
+  <Project Path="Bytekontrol.BK_Warez.Infrastructure/Bytekontrol.BK_Warez.Infrastructure.csproj" />
+</Solution>
