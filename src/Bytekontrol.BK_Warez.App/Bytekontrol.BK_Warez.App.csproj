@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mediator.Abstractions" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Bytekontrol.BK_Warez.Core\Bytekontrol.BK_Warez.Core.csproj" />
   </ItemGroup>
 
