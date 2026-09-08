@@ -45,6 +45,10 @@ export class DeviceService {
     return this.http.get<number>(`${environment.apiUrl}/devices/nextId`);
   }
 
+  getDeviceTypes(){
+    return this.http.get<string[]>(`${environment.apiUrl}/device-types`);
+  }
+
   addDevice(device: DeviceDTO) {
     return this.http.post(`${environment.apiUrl}/devices`, {device: device});
   }

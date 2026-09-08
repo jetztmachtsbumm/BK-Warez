@@ -14,9 +14,10 @@ import { DeviceService } from '../../services/device.service';
 export class DeviceEditComponent implements OnInit {
 
   initialValue: Device | null = null;
+  pendingAction: 'submit' | 'new' | 'copy' | null = null;
 
   constructor(private readonly deviceService: DeviceService, private readonly route: ActivatedRoute, private readonly router: Router) {}
-  
+
   ngOnInit(): void {
     let deviceId = this.route.snapshot.paramMap.get('id');
     if (deviceId) {
@@ -28,9 +29,35 @@ export class DeviceEditComponent implements OnInit {
 
   save(device: DeviceDTO): void {
     if(this.initialValue?.id) {
-      this.deviceService.updateDevice(this.initialValue?.id, device).subscribe(() => {
-        this.router.navigate(['/']);
+      this.pendingAction = 'submit';
+      this.deviceService.updateDevice(this.initialValue?.id, device).subscribe({
+        next: () => {
+          this.router.navigate(['/'], { state: { successMessage: 'Änderungen wurden erfolgreich gespeichert.' } });
+        },
+        error: (error) => {
+          this.pendingAction = null;
+          console.error('Error updating device:', error);
+        }
       });
     }
+  }
+
+  saveAndCopy(device: DeviceDTO): void {
+    if (!this.initialValue?.id) {
+      return;
+    }
+
+    this.pendingAction = 'copy';
+    this.deviceService.updateDevice(this.initialValue.id, device).subscribe({
+      next: () => {
+        this.router.navigate(['/geraete/neu'], {
+          state: { prefillDevice: device, successMessage: 'Änderungen wurden erfolgreich gespeichert.' }
+        });
+      },
+      error: (error) => {
+        this.pendingAction = null;
+        console.error('Error updating device:', error);
+      }
+    });
   }
 }

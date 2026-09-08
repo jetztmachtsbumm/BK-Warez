@@ -47,6 +47,10 @@ export class DeviceListComponent implements OnInit {
   copyToastVisible = false;
   private copyToastTimeout?: ReturnType<typeof setTimeout>;
 
+  successToastVisible = false;
+  successMessage = '';
+  private successToastTimeout?: ReturnType<typeof setTimeout>;
+
   constructor() {
     this.searchTerm$
       .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed())
@@ -62,6 +66,14 @@ export class DeviceListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDevices();
+
+    const successMessage = (history.state as { successMessage?: string })?.successMessage;
+    if (successMessage) {
+      this.successMessage = successMessage;
+      this.successToastVisible = true;
+      clearTimeout(this.successToastTimeout);
+      this.successToastTimeout = setTimeout(() => (this.successToastVisible = false), 3000);
+    }
   }
 
   loadDevices(): void {

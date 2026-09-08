@@ -3,5 +3,12 @@
   subtitle="Erfasse die Stammdaten für ein neues Gerät."
   submitLabel="Gerät speichern"
   [nextId]="$nextId"
+  [initialValue]="initialValue"
+  [initialToastMessage]="initialToastMessage"
+  [showSaveAndNew]="true"
+  [showSaveAndCopy]="true"
+  [pendingAction]="pendingAction"
   (formSubmit)="save($event)"
+  (saveAndNew)="saveAndNew($event)"
+  (saveAndCopy)="saveAndCopy($event)"
 />

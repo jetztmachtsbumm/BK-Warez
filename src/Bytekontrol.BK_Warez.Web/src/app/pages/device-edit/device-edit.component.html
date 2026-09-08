@@ -3,5 +3,8 @@
   subtitle="Aktualisiere die Stammdaten des Geräts."
   submitLabel="Änderungen speichern"
   [initialValue]="initialValue"
+  [showSaveAndCopy]="true"
+  [pendingAction]="pendingAction"
   (formSubmit)="save($event)"
+  (saveAndCopy)="saveAndCopy($event)"
 />
