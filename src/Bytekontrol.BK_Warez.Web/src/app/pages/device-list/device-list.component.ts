@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Device, DeviceColumn } from '../../models/device.model';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import type { Device, DeviceColumn } from '../../models/device.model';
+import { DeviceService } from '../../services/device.service';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -13,8 +16,10 @@ type SortDirection = 'asc' | 'desc';
   templateUrl: './device-list.component.html',
   styleUrl: './device-list.component.scss'
 })
-export class DeviceListComponent {
+export class DeviceListComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly deviceService = inject(DeviceService);
+  private readonly searchTerm$ = new Subject<string>();
 
   readonly columns: { key: DeviceColumn; label: string }[] = [
     { key: 'id', label: 'Id' },
@@ -26,26 +31,69 @@ export class DeviceListComponent {
     { key: 'remarks', label: 'Bemerkung' },
   ];
 
+  readonly pageSizeOptions = [10, 20, 50, 100];
+
   devices: Device[] = [];
   searchTerm = '';
   sortColumn: DeviceColumn = 'id';
   sortDirection: SortDirection = 'asc';
 
-  get filteredDevices(): Device[] {
-    const term = this.searchTerm.trim().toLowerCase();
+  page = 1;
+  pageSize = 20;
+  totalCount = 0;
+  loading = false;
+  error = '';
 
-    const filtered = term
-      ? this.devices.filter((device) =>
-          Object.values(device).some((value) => String(value).toLowerCase().includes(term))
-        )
-      : this.devices;
+  copyToastVisible = false;
+  private copyToastTimeout?: ReturnType<typeof setTimeout>;
 
-    const column = this.sortColumn;
-    const direction = this.sortDirection === 'asc' ? 1 : -1;
+  constructor() {
+    this.searchTerm$
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe(() => {
+        this.page = 1;
+        this.loadDevices();
+      });
+  }
 
-    return [...filtered].sort(
-      (a, b) => direction * String(a[column]).localeCompare(String(b[column]), 'de', { numeric: true })
-    );
+  get totalPages(): number {
+    return Math.max(Math.ceil(this.totalCount / this.pageSize), 1);
+  }
+
+  ngOnInit(): void {
+    this.loadDevices();
+  }
+
+  loadDevices(): void {
+    this.loading = true;
+    this.error = '';
+
+    this.deviceService
+      .getAllDevices({
+        page: this.page,
+        pageSize: this.pageSize,
+        searchTerm: this.searchTerm.trim(),
+        sortColumn: this.sortColumn,
+        sortDescending: this.sortDirection === 'desc',
+      })
+      .subscribe({
+        next: (result) => {
+          this.devices = result.items;
+          this.page = result.page;
+          this.pageSize = result.pageSize;
+          this.totalCount = result.totalCount;
+          this.loading = false;
+        },
+        error: () => {
+          this.error = 'Geräte konnten nicht geladen werden.';
+          this.loading = false;
+        },
+      });
+  }
+
+  onSearchChange(term: string): void {
+    this.searchTerm = term;
+    this.searchTerm$.next(term);
   }
 
   sortBy(column: DeviceColumn): void {
@@ -55,6 +103,32 @@ export class DeviceListComponent {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
+
+    this.page = 1;
+    this.loadDevices();
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages || page === this.page) {
+      return;
+    }
+
+    this.page = page;
+    this.loadDevices();
+  }
+
+  previousPage(): void {
+    this.goToPage(this.page - 1);
+  }
+
+  nextPage(): void {
+    this.goToPage(this.page + 1);
+  }
+
+  changePageSize(pageSize: number): void {
+    this.pageSize = pageSize;
+    this.page = 1;
+    this.loadDevices();
   }
 
   openDevice(device: Device): void {

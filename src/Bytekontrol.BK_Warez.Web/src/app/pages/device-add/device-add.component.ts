@@ -1,6 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceFormComponent, DeviceFormValue } from '../device-form/device-form.component';
+import { DeviceFormComponent } from '../device-form/device-form.component';
+import type { DeviceDTO } from '../../models/device.model';
+import { DeviceService } from '../../services/device.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-device-add',
@@ -10,10 +13,19 @@ import { DeviceFormComponent, DeviceFormValue } from '../device-form/device-form
   styleUrl: './device-add.component.scss'
 })
 export class DeviceAddComponent {
+  private readonly deviceService = inject(DeviceService);
   private readonly router = inject(Router);
 
-  save(value: DeviceFormValue): void {
-    // TODO: persist the new device (e.g. via a service/API call).
-    this.router.navigate(['/']);
+  $nextId: Observable<number> = this.deviceService.getNextAvailableId();
+
+  save(value: DeviceDTO): void {
+    this.deviceService.addDevice(value).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error adding device:', error);
+      }
+    });
   }
 }

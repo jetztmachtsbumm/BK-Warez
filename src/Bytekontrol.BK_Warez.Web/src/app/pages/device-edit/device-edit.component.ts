@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeviceFormComponent, DeviceFormValue } from '../device-form/device-form.component';
+import { DeviceFormComponent } from '../device-form/device-form.component';
+import { Device, DeviceDTO } from '../../models/device.model';
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'app-device-edit',
@@ -9,25 +11,26 @@ import { DeviceFormComponent, DeviceFormValue } from '../device-form/device-form
   templateUrl: './device-edit.component.html',
   styleUrl: './device-edit.component.scss'
 })
-export class DeviceEditComponent {
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+export class DeviceEditComponent implements OnInit {
 
-  // TODO: load the actual device by this id via a service once available.
-  readonly deviceId = this.route.snapshot.paramMap.get('id');
+  initialValue: Device | null = null;
 
-  // TODO: replace with the device loaded for deviceId.
-  readonly initialValue: DeviceFormValue = {
-    createdAt: '2023-03-14',
-    category: 'Werkzeug',
-    name: 'Akkuschrauber Bosch GSR 18V',
-    details: '18V, inkl. 2 Akkus und Ladegerät',
-    serialNumber: 'SN-2023-00114',
-    remarks: ''
-  };
+  constructor(private readonly deviceService: DeviceService, private readonly route: ActivatedRoute, private readonly router: Router) {}
+  
+  ngOnInit(): void {
+    let deviceId = this.route.snapshot.paramMap.get('id');
+    if (deviceId) {
+      this.deviceService.getDeviceById(deviceId).subscribe((device) => {
+        this.initialValue = device;
+      });
+    }
+  }
 
-  save(value: DeviceFormValue): void {
-    // TODO: persist the updated device (e.g. via a service/API call).
-    this.router.navigate(['/']);
+  save(device: DeviceDTO): void {
+    if(this.initialValue?.id) {
+      this.deviceService.updateDevice(this.initialValue?.id, device).subscribe(() => {
+        this.router.navigate(['/']);
+      });
+    }
   }
 }

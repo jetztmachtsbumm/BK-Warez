@@ -8,4 +8,6 @@ export interface Device {
   remarks: string;
 }
 
+export interface DeviceDTO extends Omit<Device, 'id'> {}
+
 export type DeviceColumn = keyof Device;

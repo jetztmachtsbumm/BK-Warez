@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start", "--prefix", "src/Bytekontrol.BK_Warez.Web"],
       "port": 4200
+    },
+    {
+      "name": "bk-warez-api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "src/Bytekontrol.BK_Warez.Api", "--launch-profile", "https"],
+      "port": 7153
     }
   ]
 }
