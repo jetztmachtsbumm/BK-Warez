@@ -12,6 +12,7 @@ namespace Bytekontrol.BK_Warez.Core.Entities
         string Name,
         string Details,
         string SerialNumber,
-        string Remarks
+        string Remarks,
+        bool Archived
     );
 }

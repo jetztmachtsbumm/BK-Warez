@@ -115,6 +115,21 @@
             </div>
           </div>
         </section>
+
+        @if (showArchived) {
+          <section>
+            <h2 class="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Status</h2>
+            <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+              <input
+                type="checkbox"
+                name="archived"
+                [(ngModel)]="device.archived"
+                class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              Archiviert
+            </label>
+          </section>
+        }
       </div>
 
       <div class="flex items-center justify-end gap-3 rounded-b-lg border-t border-slate-200 bg-slate-50 px-6 py-4">

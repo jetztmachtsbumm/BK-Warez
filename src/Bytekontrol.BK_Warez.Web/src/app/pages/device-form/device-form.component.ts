@@ -21,7 +21,8 @@ function emptyDevice(): DeviceDTO {
     name: '',
     details: '',
     serialNumber: '',
-    remarks: ''
+    remarks: '',
+    archived: false
   };
 }
 
@@ -43,6 +44,7 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   @Input() nextId: Observable<number> | null = null;
   @Input() showSaveAndNew = false;
   @Input() showSaveAndCopy = false;
+  @Input() showArchived = false;
   @Input() pendingAction: 'submit' | 'new' | 'copy' | null = null;
   @Input() initialToastMessage: string | null = null;
 

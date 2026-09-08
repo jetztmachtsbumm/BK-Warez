@@ -6,6 +6,7 @@ export interface Device {
   details: string;
   serialNumber: string;
   remarks: string;
+  archived: boolean;
 }
 
 export interface DeviceDTO extends Omit<Device, 'id'> {}

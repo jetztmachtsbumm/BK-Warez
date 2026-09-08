@@ -29,6 +29,7 @@ export class DeviceListComponent implements OnInit {
     { key: 'details', label: 'Details' },
     { key: 'serialNumber', label: 'Seriennummer' },
     { key: 'remarks', label: 'Bemerkung' },
+    { key: 'archived', label: 'Archiviert' },
   ];
 
   readonly pageSizeOptions = [10, 20, 50, 100];

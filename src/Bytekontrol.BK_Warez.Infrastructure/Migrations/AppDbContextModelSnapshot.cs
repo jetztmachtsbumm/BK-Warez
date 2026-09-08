@@ -30,6 +30,9 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Archived")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
