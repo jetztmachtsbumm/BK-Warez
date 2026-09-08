@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Device, DeviceDTO } from '../models/device.model';
 import { PagedResult } from '../models/paged-result.model';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 export interface DeviceQuery {
   page: number;
