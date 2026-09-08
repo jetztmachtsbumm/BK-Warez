@@ -134,4 +134,18 @@ export class DeviceListComponent implements OnInit {
   openDevice(device: Device): void {
     this.router.navigate(['/geraete', device.id, 'bearbeiten']);
   }
+
+  copyToClipboard(value: string, event: Event): void {
+    event.stopPropagation();
+
+    if (!value) {
+      return;
+    }
+
+    navigator.clipboard.writeText(value).then(() => {
+      this.copyToastVisible = true;
+      clearTimeout(this.copyToastTimeout);
+      this.copyToastTimeout = setTimeout(() => (this.copyToastVisible = false), 2000);
+    });
+  }
 }

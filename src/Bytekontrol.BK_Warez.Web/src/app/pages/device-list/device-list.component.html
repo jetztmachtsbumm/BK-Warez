@@ -77,17 +77,118 @@
           </thead>
           <tbody class="divide-y divide-slate-100">
             @for (device of devices; track device.id) {
+              @let createdAtText = device.createdAt | date:'dd.MM.yyyy';
               <tr
                 (click)="openDevice(device)"
                 class="cursor-pointer transition-colors hover:bg-indigo-50"
               >
-                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">{{ device.id }}</td>
-                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ device.createdAt | date:'dd.MM.yyyy' }}</td>
-                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{{ device.category }}</td>
-                <td class="px-4 py-3 text-sm text-slate-900">{{ device.name }}</td>
-                <td class="px-4 py-3 text-sm text-slate-600">{{ device.details }}</td>
-                <td class="whitespace-nowrap px-4 py-3 font-mono text-sm text-slate-600">{{ device.serialNumber }}</td>
-                <td class="px-4 py-3 text-sm text-slate-500">{{ device.remarks || '–' }}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">
+                  <div class="flex items-center gap-1.5">
+                    <span>{{ device.id }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(device.id + '', $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
+                  <div class="flex items-center gap-1.5">
+                    <span>{{ createdAtText }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(createdAtText || '', $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
+                  <div class="flex items-center gap-1.5">
+                    <span>{{ device.category }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(device.category, $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-sm text-slate-900">
+                  <div class="flex min-w-0 items-center gap-1.5">
+                    <span class="truncate">{{ device.name }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(device.name, $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-sm text-slate-600">
+                  <div class="flex min-w-0 items-center gap-1.5">
+                    <span class="truncate">{{ device.details }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(device.details, $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-4 py-3 font-mono text-sm text-slate-600">
+                  <div class="flex items-center gap-1.5">
+                    <span>{{ device.serialNumber }}</span>
+                    <button
+                      type="button"
+                      (click)="copyToClipboard(device.serialNumber, $event)"
+                      title="In die Zwischenablage kopieren"
+                      class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                    >
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-sm text-slate-500">
+                  <div class="flex min-w-0 items-center gap-1.5">
+                    <span class="truncate">{{ device.remarks || '–' }}</span>
+                    @if (device.remarks) {
+                      <button
+                        type="button"
+                        (click)="copyToClipboard(device.remarks, $event)"
+                        title="In die Zwischenablage kopieren"
+                        class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+                      >
+                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3a2.25 2.25 0 0 0-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5A2.25 2.25 0 0 1 18 21.75H6A2.25 2.25 0 0 1 3.75 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                        </svg>
+                      </button>
+                    }
+                  </div>
+                </td>
               </tr>
             } @empty {
               <tr>
@@ -146,4 +247,10 @@
       </div>
     </div>
   </div>
+
+  @if (copyToastVisible) {
+    <div class="fixed bottom-6 right-6 z-50 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg">
+      In die Zwischenablage kopiert
+    </div>
+  }
 </main>

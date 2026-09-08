@@ -15,7 +15,7 @@
       <p class="mt-1 text-sm text-slate-500">{{ subtitle }}</p>
     </div>
 
-    <form (ngSubmit)="submit()" class="rounded-lg border border-slate-200 bg-white shadow-sm">
+    <form (ngSubmit)="submit()" #deviceForm="ngForm" class="rounded-lg border border-slate-200 bg-white shadow-sm">
       <div class="space-y-8 px-6 py-6">
         <section>
           <h2 class="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Allgemein</h2>
@@ -95,6 +95,7 @@
                 id="details"
                 name="details"
                 [(ngModel)]="device.details"
+                required
                 rows="3"
                 placeholder="Technische Angaben, Zubehör, Zustand…"
                 class="w-full resize-none rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -125,7 +126,8 @@
         </a>
         <button
           type="submit"
-          class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-50"
+          [disabled]="deviceForm.invalid"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75 9 17.25l10.5-10.5" />
