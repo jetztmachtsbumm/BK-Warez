@@ -5,6 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseWindowsService(opt =>
+{
+    opt.ServiceName = "BK_Warez";
+});
+
+builder.Logging.AddEventLog(opt =>
+{
+    opt.SourceName = "BK_Warez";
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
