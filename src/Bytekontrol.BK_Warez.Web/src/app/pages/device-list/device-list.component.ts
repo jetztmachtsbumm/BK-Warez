@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import type { Device, DeviceColumn } from '../../models/device.model';
+import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
 
 type SortDirection = 'asc' | 'desc';
@@ -12,7 +13,7 @@ type SortDirection = 'asc' | 'desc';
 @Component({
   selector: 'app-device-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, BkIdPipe],
   templateUrl: './device-list.component.html',
   styleUrl: './device-list.component.scss'
 })

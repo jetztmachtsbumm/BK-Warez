@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Device, DeviceDTO } from '../../models/device.model';
+import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
 import { Observable } from 'rxjs';
 
@@ -29,7 +30,7 @@ function emptyDevice(): DeviceDTO {
 @Component({
   selector: 'app-device-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, BkIdPipe],
   templateUrl: './device-form.component.html',
   styleUrl: './device-form.component.scss'
 })

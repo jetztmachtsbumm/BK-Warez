@@ -78,6 +78,7 @@
           <tbody class="divide-y divide-slate-100">
             @for (device of devices; track device.id) {
               @let createdAtText = device.createdAt | date:'dd.MM.yyyy';
+              @let formattedId = device.id | bkId;
               <tr
                 (click)="openDevice(device)"
                 [class.opacity-50]="device.archived"
@@ -85,10 +86,10 @@
               >
                 <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-900">
                   <div class="flex items-center gap-1.5">
-                    <span>{{ device.id }}</span>
+                    <span>{{ formattedId }}</span>
                     <button
                       type="button"
-                      (click)="copyToClipboard(device.id + '', $event)"
+                      (click)="copyToClipboard(formattedId, $event)"
                       title="In die Zwischenablage kopieren"
                       class="inline-flex shrink-0 items-center rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
                     >

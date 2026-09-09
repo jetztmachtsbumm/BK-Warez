@@ -19,8 +19,19 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
             if (!string.IsNullOrWhiteSpace(pageRequest.SearchTerm))
             {
                 var term = pageRequest.SearchTerm.Trim();
+                var idTerm = term;
+                if (idTerm.StartsWith("BK", StringComparison.OrdinalIgnoreCase))
+                {
+                    var digits = idTerm[2..].TrimStart('0');
+                    idTerm = digits.Length > 0 ? digits : idTerm;
+                }
+                else
+                {
+                    idTerm = "";
+                }
+
                 query = query.Where(x =>
-                    EF.Functions.ILike(x.Id.ToString()!, $"%{term}%") ||
+                    EF.Functions.ILike(x.Id.ToString()!, $"%{idTerm}%") ||
                     EF.Functions.ILike(x.Category, $"%{term}%") ||
                     EF.Functions.ILike(x.Name, $"%{term}%") ||
                     EF.Functions.ILike(x.Details, $"%{term}%") ||
