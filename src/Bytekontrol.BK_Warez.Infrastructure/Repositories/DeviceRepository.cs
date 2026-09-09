@@ -25,10 +25,6 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
                     var digits = idTerm[2..].TrimStart('0');
                     idTerm = digits.Length > 0 ? digits : idTerm;
                 }
-                else
-                {
-                    idTerm = "";
-                }
 
                 query = query.Where(x =>
                     EF.Functions.ILike(x.Id.ToString()!, $"%{idTerm}%") ||
