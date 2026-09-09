@@ -20,6 +20,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
             {
                 var term = pageRequest.SearchTerm.Trim();
                 query = query.Where(x =>
+                    EF.Functions.ILike(x.Id.ToString()!, $"%{term}%") ||
                     EF.Functions.ILike(x.Category, $"%{term}%") ||
                     EF.Functions.ILike(x.Name, $"%{term}%") ||
                     EF.Functions.ILike(x.Details, $"%{term}%") ||
