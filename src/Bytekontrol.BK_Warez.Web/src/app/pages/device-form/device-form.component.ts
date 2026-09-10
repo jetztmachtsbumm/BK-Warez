@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Device, DeviceDTO } from '../../models/device.model';
@@ -53,6 +53,8 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   @Output() readonly saveAndNew = new EventEmitter<DeviceDTO>();
   @Output() readonly saveAndCopy = new EventEmitter<DeviceDTO>();
 
+  @ViewChild('serialNumberInput') serialNumberInput!: ElementRef<HTMLInputElement>;
+
   categories: string[] = [];
 
   device: DeviceDTO = emptyDevice();
@@ -65,6 +67,7 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.deviceService.getDeviceTypes().subscribe((deviceTypes) => {
       this.categories = deviceTypes;
+      this.serialNumberInput?.nativeElement.focus();
     });
 
     if (this.initialToastMessage) {
@@ -103,11 +106,14 @@ export class DeviceFormComponent implements OnInit, OnChanges {
 
   resetForm(preserveData: boolean): void {
     this.device = preserveData ? { ...this.device } : emptyDevice();
+    this.device.serialNumber = '';
     this.deviceId = null;
     this.nextId?.subscribe((nextId) => {
       this.deviceId = nextId;
     });
+
     this.showToast('Gerät wurde erfolgreich gespeichert.');
+    this.serialNumberInput?.nativeElement.focus();
   }
 
   private showToast(message: string): void {
