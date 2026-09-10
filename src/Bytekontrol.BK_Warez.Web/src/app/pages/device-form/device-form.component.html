@@ -116,18 +116,29 @@
           </div>
         </section>
 
-        @if (showArchived) {
+        @if (showArchivedAndDelivered) {
           <section>
             <h2 class="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Status</h2>
-            <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
-              <input
-                type="checkbox"
-                name="archived"
-                [(ngModel)]="device.archived"
-                class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              Archiviert
-            </label>
+            <div class="flex justify-between w-1/3">
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <input
+                  type="checkbox"
+                  name="archived"
+                  [(ngModel)]="device.archived"
+                  class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                Archiviert
+              </label>
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <input
+                  type="checkbox"
+                  name="delivered"
+                  [(ngModel)]="device.delivered"
+                  class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                Ausgeliefert
+              </label>
+            </div>
           </section>
         }
       </div>

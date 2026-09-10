@@ -40,6 +40,9 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Migrations
                     b.Property<DateOnly>("CreatedAt")
                         .HasColumnType("date");
 
+                    b.Property<bool>("Delivered")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("text");

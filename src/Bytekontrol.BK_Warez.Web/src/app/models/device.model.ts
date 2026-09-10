@@ -6,6 +6,7 @@ export interface Device {
   details: string;
   serialNumber: string;
   remarks: string;
+  delivered: boolean;
   archived: boolean;
 }
 

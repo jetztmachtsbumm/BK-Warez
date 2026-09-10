@@ -58,7 +58,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
 
         public async Task<bool> AddDeviceAsync(DeviceDTO deviceDTO, CancellationToken ct)
         {
-            var device = new Device(null, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Archived);
+            var device = new Device(null, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.Archived);
             await db.Devices.AddAsync(device, ct);
             await db.SaveChangesAsync(ct);
             return true;
@@ -66,7 +66,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
 
         public async Task<bool> UpdateDeviceAsync(int id, DeviceDTO deviceDTO, CancellationToken ct)
         {
-            var device = new Device(id, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Archived);
+            var device = new Device(id, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.Archived);
 
             db.Devices.Update(device);
             await db.SaveChangesAsync(ct);

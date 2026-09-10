@@ -30,6 +30,7 @@ export class DeviceListComponent implements OnInit {
     { key: 'details', label: 'Details' },
     { key: 'serialNumber', label: 'Seriennummer' },
     { key: 'remarks', label: 'Bemerkung' },
+    { key: 'delivered', label: 'Ausgeliefert' },
     { key: 'archived', label: 'Archiviert' },
   ];
 

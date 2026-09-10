@@ -194,6 +194,15 @@
                 <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
                   <input
                     type="checkbox"
+                    [checked]="device.delivered"
+                    disabled
+                    title="Ausgelieferte Geräte können nur über die Bearbeitungsseite (de-)ausgeliefert werden."
+                    class="h-4 w-4 rounded border-slate-300 text-indigo-600 disabled:cursor-not-allowed"
+                  />
+                </td>
+                <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
                     [checked]="device.archived"
                     disabled
                     title="Archivierte Geräte können nur über die Bearbeitungsseite (de-)archiviert werden."

@@ -12,6 +12,7 @@ namespace Bytekontrol.BK_Warez.Core.Common.DTOs
         string Details,
         string SerialNumber,
         string Remarks,
+        bool Delivered,
         bool Archived
     );
 }
