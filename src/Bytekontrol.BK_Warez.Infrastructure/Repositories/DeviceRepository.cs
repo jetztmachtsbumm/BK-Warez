@@ -90,6 +90,8 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
                 "details" => descending ? query.OrderByDescending(x => x.Details) : query.OrderBy(x => x.Details),
                 "serialnumber" => descending ? query.OrderByDescending(x => x.SerialNumber) : query.OrderBy(x => x.SerialNumber),
                 "remarks" => descending ? query.OrderByDescending(x => x.Remarks) : query.OrderBy(x => x.Remarks),
+                "delivered" => descending ? query.OrderByDescending(x => x.Delivered) : query.OrderBy(x => x.Delivered),
+                "archived" => descending ? query.OrderByDescending(x => x.Archived) : query.OrderBy(x => x.Archived),
                 _ => descending ? query.OrderByDescending(x => x.Id) : query.OrderBy(x => x.Id),
             };
         }
