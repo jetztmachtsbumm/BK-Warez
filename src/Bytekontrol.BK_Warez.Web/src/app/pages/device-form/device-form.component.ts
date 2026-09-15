@@ -24,7 +24,7 @@ function emptyDevice(): DeviceDTO {
     serialNumber: '',
     remarks: '',
     delivered: false,
-    deliveryDate: '',
+    deliveryDate: null,
     archived: false
   };
 }

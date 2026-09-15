@@ -7,7 +7,7 @@ export interface Device {
   serialNumber: string;
   remarks: string;
   delivered: boolean;
-  deliveryDate: string;
+  deliveryDate: string | null;
   archived: boolean;
 }
 
