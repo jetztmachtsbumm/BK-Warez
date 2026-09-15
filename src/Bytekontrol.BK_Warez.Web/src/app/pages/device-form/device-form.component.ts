@@ -99,14 +99,17 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   }
 
   submit(): void {
+    this.checkForEmptyDate();
     this.formSubmit.emit(this.device);
   }
 
   submitAndNew(): void {
+    this.checkForEmptyDate();
     this.saveAndNew.emit(this.device);
   }
 
   submitAndCopy(): void {
+    this.checkForEmptyDate();
     this.saveAndCopy.emit(this.device);
   }
 
@@ -120,6 +123,10 @@ export class DeviceFormComponent implements OnInit, OnChanges {
 
     this.showToast('Gerät wurde erfolgreich gespeichert.');
     this.serialNumberInput?.nativeElement.focus();
+  }
+
+  private checkForEmptyDate(){
+    if(this.device.deliveryDate === '') this.device.deliveryDate = null;
   }
 
   private showToast(message: string): void {
