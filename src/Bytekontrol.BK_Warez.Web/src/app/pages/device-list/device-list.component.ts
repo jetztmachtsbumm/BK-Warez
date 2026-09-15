@@ -43,7 +43,7 @@ export class DeviceListComponent implements OnInit {
   sortDirection: SortDirection = 'asc';
 
   page = 1;
-  pageSize = 20;
+  pageSize = localStorage.getItem('pageSize') ? parseInt(localStorage.getItem('pageSize')!, 10) : 20;
   totalCount = 0;
   loading = false;
   error = '';
@@ -145,6 +145,8 @@ export class DeviceListComponent implements OnInit {
     this.pageSize = pageSize;
     this.page = 1;
     this.loadDevices();
+
+    localStorage.setItem('pageSize', pageSize.toString());
   }
 
   openDevice(device: Device): void {
