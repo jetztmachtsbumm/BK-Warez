@@ -1,6 +1,8 @@
 ﻿using Bytekontrol.BK_Warez.Core.Repositories;
+using Bytekontrol.BK_Warez.Core.Services;
 using Bytekontrol.BK_Warez.Infrastructure.Persistence;
 using Bytekontrol.BK_Warez.Infrastructure.Repositories;
+using Bytekontrol.BK_Warez.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,13 @@ namespace Bytekontrol.BK_Warez.Infrastructure
             });
 
             services.AddScoped<IDeviceRepository, DeviceRepository>();
+
+            services.AddScoped<IWarrantyService, LenovoWarrantyService>();
+
+            services.AddHttpClient<IWarrantyService, LenovoWarrantyService>(client =>
+            {
+                client.BaseAddress = new Uri("https://supportapi.lenovo.com/");
+            });
 
             return services;
         }
