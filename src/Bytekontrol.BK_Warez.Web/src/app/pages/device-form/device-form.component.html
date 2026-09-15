@@ -61,7 +61,7 @@
             </div>
 
             <div>
-              <label for="createdAt" class="mb-1.5 block text-sm font-medium text-slate-700">Erstelldatum</label>
+              <label for="createdAt" class="mb-1.5 block text-sm font-medium text-slate-700">Anlagedatum</label>
               <input
                 id="createdAt"
                 type="date"
@@ -119,7 +119,7 @@
         @if (showArchivedAndDelivered) {
           <section>
             <h2 class="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Status</h2>
-            <div class="flex justify-between w-1/3">
+            <div class="flex justify-between w-3/4">
               <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
                 <input
                   type="checkbox"
@@ -134,9 +134,20 @@
                   type="checkbox"
                   name="delivered"
                   [(ngModel)]="device.delivered"
+                  (change)="deliverDevice()"
                   class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 Ausgeliefert
+              </label>
+              <label for="deliveryDate" class="mb-1.5 block text-sm font-medium text-slate-700">
+                Ausgeliefert am
+                <input
+                  id="deliveryDate"
+                  type="date"
+                  name="deliveryDate"
+                  [(ngModel)]="device.deliveryDate"
+                  class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                />
               </label>
             </div>
           </section>

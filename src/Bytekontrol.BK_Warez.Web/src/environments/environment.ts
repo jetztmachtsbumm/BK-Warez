@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://nas:6969/api'
+  apiUrl: 'https://localhost:6969/api'
 };

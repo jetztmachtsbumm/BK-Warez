@@ -13,6 +13,7 @@ namespace Bytekontrol.BK_Warez.Core.Common.DTOs
         string SerialNumber,
         string Remarks,
         bool Delivered,
+        DateOnly? DeliveryDate,
         bool Archived
     );
 }

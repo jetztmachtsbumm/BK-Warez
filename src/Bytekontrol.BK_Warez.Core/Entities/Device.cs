@@ -14,6 +14,7 @@ namespace Bytekontrol.BK_Warez.Core.Entities
         string SerialNumber,
         string Remarks,
         bool Delivered,
+        DateOnly? DeliveryDate,
         bool Archived
     );
 }

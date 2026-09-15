@@ -25,12 +25,13 @@ export class DeviceListComponent implements OnInit {
   readonly columns: { key: DeviceColumn; label: string }[] = [
     { key: 'id', label: 'Id' },
     { key: 'createdAt', label: 'Anlagedatum' },
-    { key: 'category', label: 'Gattung' },
+    { key: 'category', label: 'Typ' },
     { key: 'name', label: 'Bezeichnung' },
     { key: 'details', label: 'Details' },
     { key: 'serialNumber', label: 'Seriennummer' },
     { key: 'remarks', label: 'Bemerkung' },
     { key: 'delivered', label: 'Ausgeliefert' },
+    { key: 'deliveryDate', label: 'Ausgeliefert am' },
     { key: 'archived', label: 'Archiviert' },
   ];
 

@@ -24,6 +24,7 @@ function emptyDevice(): DeviceDTO {
     serialNumber: '',
     remarks: '',
     delivered: false,
+    deliveryDate: '',
     archived: false
   };
 }
@@ -91,6 +92,10 @@ export class DeviceFormComponent implements OnInit, OnChanges {
         this.deviceId = nextId;
       });
     }
+  }
+
+  deliverDevice(): void {
+    this.device.deliveryDate ??= todayIsoDate();
   }
 
   submit(): void {
