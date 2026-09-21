@@ -1,5 +1,6 @@
 ﻿using Bytekontrol.BK_Warez.Core.Services;
 using Bytekontrol.BK_Warez.Infrastructure.Warranty;
+using Bytekontrol.BK_Warez.Core.Common.Warranty;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 
@@ -7,7 +8,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Services
 {
     public sealed class LenovoWarrantyService(HttpClient httpClient, IConfiguration configuration) : IWarrantyService
     {
-        public async Task<bool> IsWarrantyExpiredAsync(string serialNumber, CancellationToken ct)
+        public async Task<DeviceWarranty> IsWarrantyExpiredAsync(string serialNumber, CancellationToken ct)
         {
             var clientId = configuration["ClientIds:Lenovo"];
 
@@ -25,12 +26,17 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Services
 
             if (result?.Warranty is null || result.Warranty.Count == 0) throw new InvalidOperationException($"No warranty information found for serial number '{serialNumber}'.");
 
+            var startDate = result.Warranty
+            .Where(x => x.Start is not null)
+            .Select(x => x.Start!.Value)
+            .Max();
+
             var endDate = result.Warranty
             .Where(x => x.End is not null)
             .Select(x => x.End!.Value)
             .Max();
 
-            return endDate.Date < DateTime.Now.Date;
+            return new DeviceWarranty(startDate, endDate, endDate <= DateTime.UtcNow);
         }
     }
 }

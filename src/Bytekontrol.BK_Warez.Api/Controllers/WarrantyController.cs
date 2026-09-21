@@ -9,7 +9,7 @@ namespace Bytekontrol.BK_Warez.Api.Controllers
     public class WarrantyController(ISender sender) : ControllerBase
     {
 
-        public async Task<IActionResult> GetWarrantyStatus(WarrantyExpiredQuery query)
+        public async Task<IActionResult> GetWarrantyStatus([FromQuery] WarrantyExpiredQuery query)
         {
             return Ok(await sender.Send(query));
         }

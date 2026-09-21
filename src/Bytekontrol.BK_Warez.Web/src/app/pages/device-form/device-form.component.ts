@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Device, DeviceDTO } from '../../models/device.model';
+import { DeviceWarranty, WarrantyStatus } from '../../models/device-warranty.model';
 import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
 import { Observable } from 'rxjs';
@@ -48,6 +49,9 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   @Input() showSaveAndNew = false;
   @Input() showSaveAndCopy = false;
   @Input() showArchivedAndDelivered = false;
+  @Input() showWarranty = false;
+  @Input() warranty: DeviceWarranty | null = null;
+  @Input() warrantyStatus: WarrantyStatus = 'none';
   @Input() pendingAction: 'submit' | 'new' | 'copy' | null = null;
   @Input() initialToastMessage: string | null = null;
 
@@ -65,6 +69,22 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   toastVisible = false;
   toastMessage = '';
   private toastTimeout?: ReturnType<typeof setTimeout>;
+
+  get warrantyState(): 'loading' | 'valid' | 'expired' | 'error' | 'none' {
+    if (this.warrantyStatus === 'loading') {
+      return 'loading';
+    }
+
+    if (this.warrantyStatus === 'error') {
+      return 'error';
+    }
+
+    if (this.warrantyStatus === 'loaded' && this.warranty) {
+      return this.warranty.expired ? 'expired' : 'valid';
+    }
+
+    return 'none';
+  }
 
   ngOnInit(): void {
     this.deviceService.getDeviceTypes().subscribe((deviceTypes) => {
