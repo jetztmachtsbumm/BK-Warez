@@ -147,7 +147,7 @@
                 </td>
                 <td class="px-4 py-3 text-sm text-slate-600">
                   <div class="flex min-w-0 items-center gap-1.5">
-                    <span class="truncate">{{ device.details }}</span>
+                    <span class="truncate" [title]="device.details">{{ truncateText(device.details) }}</span>
                     <button
                       type="button"
                       (click)="copyToClipboard(device.details, $event)"
@@ -177,7 +177,7 @@
                 </td>
                 <td class="px-4 py-3 text-sm text-slate-500">
                   <div class="flex min-w-0 items-center gap-1.5">
-                    <span class="truncate">{{ device.remarks || '–' }}</span>
+                    <span class="truncate" [title]="device.remarks">{{ truncateText(device.remarks) || '–' }}</span>
                     @if (device.remarks) {
                       <button
                         type="button"

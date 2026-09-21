@@ -37,6 +37,8 @@ export class DeviceListComponent implements OnInit {
 
   readonly pageSizeOptions = [10, 20, 50, 100];
 
+  private static readonly textMaxLength = 10;
+
   devices: Device[] = [];
   searchTerm = '';
   sortColumn: DeviceColumn = 'id';
@@ -147,6 +149,14 @@ export class DeviceListComponent implements OnInit {
     this.loadDevices();
 
     localStorage.setItem('pageSize', pageSize.toString());
+  }
+
+  truncateText(value: string): string {
+    if (!value || value.length <= DeviceListComponent.textMaxLength) {
+      return value;
+    }
+
+    return value.slice(0, DeviceListComponent.textMaxLength).trimEnd() + '…';
   }
 
   openDevice(device: Device): void {
