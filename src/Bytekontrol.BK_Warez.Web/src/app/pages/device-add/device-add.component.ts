@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceFormComponent } from '../device-form/device-form.component';
+import { DeviceFormComponent, todayIsoDate } from '../device-form/device-form.component';
 import type { DeviceDTO } from '../../models/device.model';
 import { DeviceService } from '../../services/device.service';
 import { Observable } from 'rxjs';
@@ -28,7 +28,7 @@ export class DeviceAddComponent implements OnInit {
     const state = history.state as { prefillDevice?: DeviceDTO; successMessage?: string };
 
     if (state?.prefillDevice) {
-      this.initialValue = state.prefillDevice;
+      this.initialValue = { ...state.prefillDevice, createdAt: todayIsoDate() };
     }
 
     if (state?.successMessage) {

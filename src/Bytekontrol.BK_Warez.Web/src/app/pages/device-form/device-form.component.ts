@@ -8,7 +8,7 @@ import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
 import { Observable } from 'rxjs';
 
-function todayIsoDate(): string {
+export function todayIsoDate(): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -136,6 +136,7 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   resetForm(preserveData: boolean): void {
     this.device = preserveData ? { ...this.device } : emptyDevice();
     this.device.serialNumber = '';
+    this.device.createdAt = todayIsoDate();
     this.deviceId = null;
     this.nextId?.subscribe((nextId) => {
       this.deviceId = nextId;
