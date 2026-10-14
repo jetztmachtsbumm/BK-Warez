@@ -77,7 +77,7 @@ export class DeviceEditComponent implements OnInit {
     this.deviceService.updateDevice(this.initialValue.id, device).subscribe({
       next: () => {
         this.router.navigate(['/geraete/neu'], {
-          state: { prefillDevice: device, successMessage: 'Änderungen wurden erfolgreich gespeichert.' }
+          state: { prefillDevice: {...device, serialNumber: ''}, successMessage: 'Änderungen wurden erfolgreich gespeichert.' }
         });
       },
       error: (error) => {
