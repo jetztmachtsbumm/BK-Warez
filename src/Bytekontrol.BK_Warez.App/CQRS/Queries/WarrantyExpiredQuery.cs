@@ -7,13 +7,20 @@ using System.Text;
 
 namespace Bytekontrol.BK_Warez.App.CQRS.Queries
 {
-    public sealed record WarrantyExpiredQuery(string SerialNumber) : IRequest<DeviceWarranty>;
+    public sealed record WarrantyExpiredQuery(string Manufacturer, string SerialNumber) : IRequest<DeviceWarranty?>;
 
-    public sealed class WarrantyExpiredQueryHandler(IWarrantyService warrantyService) : IRequestHandler<WarrantyExpiredQuery, DeviceWarranty>
+    public sealed class WarrantyExpiredQueryHandler(IWarrantyServiceResolver warrantyServiceResolver) : IRequestHandler<WarrantyExpiredQuery, DeviceWarranty?>
     {
-        public async ValueTask<DeviceWarranty> Handle(WarrantyExpiredQuery request, CancellationToken cancellationToken)
+        public async ValueTask<DeviceWarranty?> Handle(WarrantyExpiredQuery request, CancellationToken cancellationToken)
         {
-            return await warrantyService.IsWarrantyExpiredAsync(request.SerialNumber, cancellationToken);
+            var service = warrantyServiceResolver.Resolve(request.Manufacturer);
+
+            if(service is null)
+            {
+                return null;
+            }
+
+            return await service.IsWarrantyExpiredAsync(request.SerialNumber, cancellationToken);
         }
     }
 }

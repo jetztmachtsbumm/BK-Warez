@@ -27,6 +27,7 @@ export class DeviceListComponent implements OnInit {
     { key: 'createdAt', label: 'Anlagedatum' },
     { key: 'category', label: 'Typ' },
     { key: 'name', label: 'Bezeichnung' },
+    { key: 'manufacturer', label: 'Hersteller' },
     { key: 'details', label: 'Details' },
     { key: 'serialNumber', label: 'Seriennummer' },
     { key: 'remarks', label: 'Bemerkung' },

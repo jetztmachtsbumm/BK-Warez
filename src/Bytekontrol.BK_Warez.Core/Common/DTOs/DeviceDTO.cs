@@ -9,6 +9,7 @@ namespace Bytekontrol.BK_Warez.Core.Common.DTOs
         DateOnly CreatedAt,
         string Category,
         string Name,
+        string Manufacturer,
         string Details,
         string SerialNumber,
         string Remarks,

@@ -22,7 +22,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure
 
             services.AddScoped<IDeviceRepository, DeviceRepository>();
 
-            services.AddScoped<IWarrantyService, LenovoWarrantyService>();
+            services.AddTransient<IWarrantyServiceResolver, WarrantyServiceResolver>();
 
             services.AddHttpClient<IWarrantyService, LenovoWarrantyService>(client =>
             {

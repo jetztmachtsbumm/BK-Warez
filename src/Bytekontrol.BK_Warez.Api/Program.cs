@@ -44,6 +44,7 @@ app.UseCors("AllowClient");
 
 app.MapControllers();
 
+app.MapGet("api/manufacturers", () => builder.Configuration.GetSection("Manufacturers").Get<string[]>() ?? []);
 app.MapGet("api/device-types", () => builder.Configuration.GetSection("DeviceTypes").Get<string[]>() ?? []);
 
 app.Run();

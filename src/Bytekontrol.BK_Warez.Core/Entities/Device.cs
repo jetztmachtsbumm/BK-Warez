@@ -10,6 +10,7 @@ namespace Bytekontrol.BK_Warez.Core.Entities
         DateOnly CreatedAt,
         string Category,
         string Name,
+        string Manufacturer,
         string Details,
         string SerialNumber,
         string Remarks,

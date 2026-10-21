@@ -45,6 +45,10 @@ export class DeviceService {
     return this.http.get<number>(`${environment.apiUrl}/devices/nextId`);
   }
 
+  getManufacturers(){
+    return this.http.get<string[]>(`${environment.apiUrl}/manufacturers`);
+  }
+
   getDeviceTypes(){
     return this.http.get<string[]>(`${environment.apiUrl}/device-types`);
   }

@@ -27,23 +27,28 @@ export class DeviceEditComponent implements OnInit {
     if (deviceId) {
       this.deviceService.getDeviceById(deviceId).subscribe((device) => {
         this.initialValue = device;
-        this.loadWarranty(device.serialNumber);
+        this.loadWarranty(device.manufacturer, device.serialNumber);
       });
     }
   }
 
-  private loadWarranty(serialNumber: string): void {
-    if (!serialNumber?.trim()) {
+  private loadWarranty(manufacturer: string, serialNumber: string): void {
+    if (!manufacturer?.trim() || !serialNumber?.trim()) {
       this.warranty = null;
       this.warrantyStatus = 'none';
       return;
     }
 
     this.warrantyStatus = 'loading';
-    this.warrantyService.getWarranty(serialNumber).subscribe({
+    this.warrantyService.getWarranty(manufacturer, serialNumber).subscribe({
       next: (warranty) => {
         this.warranty = warranty;
-        this.warrantyStatus = 'loaded';
+        if(warranty){
+          this.warrantyStatus = 'loaded';
+        }else{
+          this.warrantyStatus = "not-implemented";
+          console.error('Warranty check not implemented for manufacturer ' + manufacturer);
+        }
       },
       error: (error) => {
         this.warranty = null;

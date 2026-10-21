@@ -7,6 +7,8 @@ namespace Bytekontrol.BK_Warez.Core.Services
 {
     public interface IWarrantyService
     {
+        string Manufacturer { get; }
+
         Task<DeviceWarranty> IsWarrantyExpiredAsync(string serialNumber, CancellationToken ct);
     }
 }

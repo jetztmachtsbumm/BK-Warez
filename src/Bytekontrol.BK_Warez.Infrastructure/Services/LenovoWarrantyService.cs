@@ -8,6 +8,8 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Services
 {
     public sealed class LenovoWarrantyService(HttpClient httpClient, IConfiguration configuration) : IWarrantyService
     {
+        public string Manufacturer => "Lenovo";
+
         public async Task<DeviceWarranty> IsWarrantyExpiredAsync(string serialNumber, CancellationToken ct)
         {
             var clientId = configuration["ClientIds:Lenovo"];

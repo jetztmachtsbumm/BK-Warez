@@ -10,8 +10,8 @@ export class WarrantyService {
 
   constructor(private http: HttpClient) { }
 
-  getWarranty(serialNumber: string) {
-    const params = new HttpParams().set('serialNumber', serialNumber);
+  getWarranty(manufacturer: string, serialNumber: string) {
+    const params = new HttpParams().set('manufacturer', manufacturer).set('serialNumber', serialNumber);
 
     return this.http.get<DeviceWarranty>(`${environment.apiUrl}/warranty`, { params });
   }

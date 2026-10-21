@@ -6,7 +6,7 @@ import { Device, DeviceDTO } from '../../models/device.model';
 import { DeviceWarranty, WarrantyStatus } from '../../models/device-warranty.model';
 import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 export function todayIsoDate(): string {
   const now = new Date();
@@ -21,6 +21,7 @@ function emptyDevice(): DeviceDTO {
     createdAt: todayIsoDate(),
     category: '',
     name: '',
+    manufacturer: '',
     details: '',
     serialNumber: '',
     remarks: '',
@@ -61,6 +62,7 @@ export class DeviceFormComponent implements OnInit, OnChanges {
 
   @ViewChild('serialNumberInput') serialNumberInput!: ElementRef<HTMLInputElement>;
 
+  manufacturers: string[] = [];
   categories: string[] = [];
 
   device: DeviceDTO = emptyDevice();
@@ -70,7 +72,7 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   toastMessage = '';
   private toastTimeout?: ReturnType<typeof setTimeout>;
 
-  get warrantyState(): 'loading' | 'valid' | 'expired' | 'error' | 'none' {
+  get warrantyState(): 'loading' | 'valid' | 'expired' | 'error' | 'none' | 'not-implemented' {
     if (this.warrantyStatus === 'loading') {
       return 'loading';
     }
@@ -83,11 +85,19 @@ export class DeviceFormComponent implements OnInit, OnChanges {
       return this.warranty.expired ? 'expired' : 'valid';
     }
 
+    if(this.warrantyStatus === 'not-implemented'){
+      return 'not-implemented';
+    }
+
     return 'none';
   }
 
   ngOnInit(): void {
-    this.deviceService.getDeviceTypes().subscribe((deviceTypes) => {
+    const manufacturersObs = this.deviceService.getManufacturers();
+    const deviceTypesObs = this.deviceService.getDeviceTypes();
+
+    forkJoin([manufacturersObs, deviceTypesObs]).subscribe(([manufacturers, deviceTypes]) => {
+      this.manufacturers = manufacturers;
       this.categories = deviceTypes;
       this.serialNumberInput?.nativeElement.focus();
     });

@@ -30,6 +30,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
                     EF.Functions.ILike(x.Id.ToString()!, $"%{idTerm}%") ||
                     EF.Functions.ILike(x.Category, $"%{term}%") ||
                     EF.Functions.ILike(x.Name, $"%{term}%") ||
+                    EF.Functions.ILike(x.Manufacturer, $"%{term}%") ||
                     EF.Functions.ILike(x.Details, $"%{term}%") ||
                     EF.Functions.ILike(x.SerialNumber, $"%{term}%") ||
                     EF.Functions.ILike(x.Remarks, $"%{term}%"));
@@ -58,7 +59,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
 
         public async Task<bool> AddDeviceAsync(DeviceDTO deviceDTO, CancellationToken ct)
         {
-            var device = new Device(null, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.DeliveryDate, deviceDTO.Archived);
+            var device = new Device(null, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Manufacturer, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.DeliveryDate, deviceDTO.Archived);
             await db.Devices.AddAsync(device, ct);
             await db.SaveChangesAsync(ct);
             return true;
@@ -66,7 +67,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
 
         public async Task<bool> UpdateDeviceAsync(int id, DeviceDTO deviceDTO, CancellationToken ct)
         {
-            var device = new Device(id, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.DeliveryDate, deviceDTO.Archived);
+            var device = new Device(id, deviceDTO.CreatedAt, deviceDTO.Category, deviceDTO.Name, deviceDTO.Manufacturer, deviceDTO.Details, deviceDTO.SerialNumber, deviceDTO.Remarks, deviceDTO.Delivered, deviceDTO.DeliveryDate, deviceDTO.Archived);
 
             db.Devices.Update(device);
             await db.SaveChangesAsync(ct);
@@ -87,6 +88,7 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
                 "createdat" => descending ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt),
                 "category" => descending ? query.OrderByDescending(x => x.Category) : query.OrderBy(x => x.Category),
                 "name" => descending ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name),
+                "manufacturer" => descending ? query.OrderByDescending(x => x.Manufacturer) : query.OrderBy(x => x.Manufacturer),
                 "details" => descending ? query.OrderByDescending(x => x.Details) : query.OrderBy(x => x.Details),
                 "serialnumber" => descending ? query.OrderByDescending(x => x.SerialNumber) : query.OrderBy(x => x.SerialNumber),
                 "remarks" => descending ? query.OrderByDescending(x => x.Remarks) : query.OrderBy(x => x.Remarks),

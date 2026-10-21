@@ -3,6 +3,7 @@ export interface Device {
   createdAt: string;
   category: string;
   name: string;
+  manufacturer: string;
   details: string;
   serialNumber: string;
   remarks: string;

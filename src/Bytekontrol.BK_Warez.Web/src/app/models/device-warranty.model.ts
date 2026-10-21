@@ -4,4 +4,4 @@ export interface DeviceWarranty{
     expired: boolean;
 }
 
-export type WarrantyStatus = 'none' | 'loading' | 'loaded' | 'error';
+export type WarrantyStatus = 'none' | 'loading' | 'loaded' | 'error' | 'not-implemented';

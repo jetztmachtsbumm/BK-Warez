@@ -31,7 +31,7 @@
               />
             </div>
 
-            <div class="sm:col-span-2">
+            <div>
               <label for="name" class="mb-1.5 block text-sm font-medium text-slate-700">Bezeichnung</label>
               <input
                 id="name"
@@ -42,6 +42,22 @@
                 placeholder="z. B. Akkuschrauber Bosch GSR 18V"
                 class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
+            </div>
+
+            <div>
+              <label for="category" class="mb-1.5 block text-sm font-medium text-slate-700">Hersteller</label>
+              <select
+                id="manufacturer"
+                name="manufacturer"
+                [(ngModel)]="device.manufacturer"
+                required
+                class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              >
+                <option value="" disabled>Bitte wählen…</option>
+                @for (manufacturer of manufacturers; track manufacturer) {
+                  <option [value]="manufacturer">{{ manufacturer }}</option>
+                }
+              </select>
             </div>
 
             <div>
@@ -97,7 +113,7 @@
                   class="flex w-full items-center gap-2 rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-sm shadow-sm"
                   [class.text-emerald-700]="warrantyState === 'valid'"
                   [class.text-red-700]="warrantyState === 'expired'"
-                  [class.text-amber-700]="warrantyState === 'error'"
+                  [class.text-amber-700]="warrantyState === 'error' || warrantyState === 'not-implemented'"
                   [class.text-slate-500]="warrantyState === 'loading' || warrantyState === 'none'"
                 >
                   @switch (warrantyState) {
@@ -118,6 +134,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                       </svg>
                       Garantie konnte nicht geladen werden
+                    }
+                    @case ('not-implemented') {
+                      <svg class="h-5 w-5 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                      </svg>
+                      Garantie-Check für diesen Hersteller nicht implementiert
                     }
                     @case ('loading') {
                       <svg class="h-5 w-5 shrink-0 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">
