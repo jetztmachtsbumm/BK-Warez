@@ -9,7 +9,9 @@ namespace Bytekontrol.BK_Warez.Core.Common.Paging
         int PageSize = 20,
         string? SearchTerm = null,
         string? SortColumn = null,
-        bool SortDescending = false
+        bool SortDescending = false,
+        bool ShowDelivered = false,
+        bool ShowArchived = false
     )
     {
         public int NormalizedPage => Math.Max(Page, 1);

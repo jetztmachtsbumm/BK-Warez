@@ -42,6 +42,8 @@ export class DeviceListComponent implements OnInit {
 
   devices: Device[] = [];
   searchTerm = '';
+  showDelivered = false;
+  showArchived = false;
   sortColumn: DeviceColumn = 'id';
   sortDirection: SortDirection = 'asc';
 
@@ -94,6 +96,8 @@ export class DeviceListComponent implements OnInit {
         searchTerm: this.searchTerm.trim(),
         sortColumn: this.sortColumn,
         sortDescending: this.sortDirection === 'desc',
+        showDelivered: this.showDelivered,
+        showArchived: this.showArchived,
       })
       .subscribe({
         next: (result) => {
@@ -113,6 +117,18 @@ export class DeviceListComponent implements OnInit {
   onSearchChange(term: string): void {
     this.searchTerm = term;
     this.searchTerm$.next(term);
+  }
+
+  onShowDeliveredChange(value: boolean): void {
+    this.showDelivered = value;
+    this.page = 1;
+    this.loadDevices();
+  }
+
+  onShowArchivedChange(value: boolean): void {
+    this.showArchived = value;
+    this.page = 1;
+    this.loadDevices();
   }
 
   sortBy(column: DeviceColumn): void {

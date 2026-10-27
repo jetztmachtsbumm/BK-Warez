@@ -8,20 +8,42 @@
     </div>
 
     <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div class="relative w-full sm:max-w-xs">
-        <svg
-          class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
-          fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M18.5 11a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
-        </svg>
-        <input
-          type="text"
-          [ngModel]="searchTerm"
-          (ngModelChange)="onSearchChange($event)"
-          placeholder="Geräte durchsuchen…"
-          class="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-        />
+      <div class="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="relative w-full sm:max-w-xs">
+          <svg
+            class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M18.5 11a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+          </svg>
+          <input
+            type="text"
+            [ngModel]="searchTerm"
+            (ngModelChange)="onSearchChange($event)"
+            placeholder="Geräte durchsuchen…"
+            class="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+        </div>
+
+        <label class="inline-flex cursor-pointer select-none items-center gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            [ngModel]="showDelivered"
+            (ngModelChange)="onShowDeliveredChange($event)"
+            class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+          />
+          Ausgeliefert anzeigen
+        </label>
+
+        <label class="inline-flex cursor-pointer select-none items-center gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            [ngModel]="showArchived"
+            (ngModelChange)="onShowArchivedChange($event)"
+            class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+          />
+          Archiviert anzeigen
+        </label>
       </div>
 
       <a

@@ -16,6 +16,16 @@ namespace Bytekontrol.BK_Warez.Infrastructure.Repositories
 
             IQueryable<Device> query = db.Devices.AsNoTracking();
 
+            if (!pageRequest.ShowDelivered)
+            {
+                query = query.Where(x => !x.Delivered);
+            }
+
+            if (!pageRequest.ShowArchived)
+            {
+                query = query.Where(x => !x.Archived);
+            }
+
             if (!string.IsNullOrWhiteSpace(pageRequest.SearchTerm))
             {
                 var term = pageRequest.SearchTerm.Trim();

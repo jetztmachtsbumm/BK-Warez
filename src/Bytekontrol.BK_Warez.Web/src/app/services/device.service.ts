@@ -10,6 +10,8 @@ export interface DeviceQuery {
   searchTerm?: string;
   sortColumn?: string;
   sortDescending?: boolean;
+  showDelivered?: boolean;
+  showArchived?: boolean;
 }
 
 @Injectable({
@@ -22,7 +24,9 @@ export class DeviceService {
   getAllDevices(query: DeviceQuery) {
     let params = new HttpParams()
       .set('page', query.page)
-      .set('pageSize', query.pageSize);
+      .set('pageSize', query.pageSize)
+      .set('showDelivered', !!query.showDelivered)
+      .set('showArchived', !!query.showArchived);
 
     if (query.searchTerm) {
       params = params.set('searchTerm', query.searchTerm);
