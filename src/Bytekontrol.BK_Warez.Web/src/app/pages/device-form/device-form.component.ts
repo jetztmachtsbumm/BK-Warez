@@ -6,7 +6,8 @@ import { Device, DeviceDTO } from '../../models/device.model';
 import { DeviceWarranty, WarrantyStatus } from '../../models/device-warranty.model';
 import { BkIdPipe } from '../../pipes/bk-id.pipe';
 import { DeviceService } from '../../services/device.service';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 export function todayIsoDate(): string {
   const now = new Date();
@@ -93,13 +94,23 @@ export class DeviceFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    const manufacturersObs = this.deviceService.getManufacturers();
-    const deviceTypesObs = this.deviceService.getDeviceTypes();
-
-    forkJoin([manufacturersObs, deviceTypesObs]).subscribe(([manufacturers, deviceTypes]) => {
-      this.manufacturers = manufacturers;
-      this.categories = deviceTypes;
-      this.serialNumberInput?.nativeElement.focus();
+    // Sequential on purpose: Firefox's local network access check aborts parallel requests
+    // from a public page to a private IP.
+    this.deviceService.getManufacturers().pipe(
+      switchMap(manufacturers =>
+        this.deviceService.getDeviceTypes().pipe(
+          map(deviceTypes => ({ manufacturers, deviceTypes }))
+        )
+      )
+    ).subscribe({
+      next: ({ manufacturers, deviceTypes }) => {
+        this.manufacturers = manufacturers;
+        this.categories = deviceTypes;
+        this.serialNumberInput?.nativeElement.focus();
+      },
+      error: error => {
+        console.error('Loading reference data failed:', error);
+      }
     });
 
     if (this.initialToastMessage) {
